@@ -24,7 +24,7 @@ class Model {
 
         this.data.push(parseData)
 
-        if (afterStore) afterStore(data)
+        if (afterStore) afterStore(parseData || data)
 
         return this;
     }

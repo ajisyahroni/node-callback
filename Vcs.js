@@ -1,10 +1,7 @@
 const fs = require('fs')
-const path = require('path');
-const util = require('util')
 const prompts = require('prompts')
 const { exec } = require('child_process')
 const chalk = require('chalk');
-const { red } = require('chalk');
 
 const log = console.log
 const redLog = (...logs) => {
@@ -51,26 +48,27 @@ class Git {
 
     async checkFiles(callback) {
         if (this.isGitRepo()) {
-            
-            this.gitStatus((gitStatusStdout)=>{
+
+            this.gitStatus((gitStatusStdout) => {
                 warnLog(`there some ${chalk.underline('untracked & uncommited')} files :`)
                 greenLog(gitStatusStdout)
+
+                prompts({
+                    type: 'confirm',
+                    name: 'value',
+                    message: 'r u sure to continue ?',
+                    initial: true
+                })
+                    .then((answer) => {
+                        if (answer.value) {
+                            callback.call()
+                        }
+                        else {
+                            process.exit();
+                        }
+                    })
             })
 
-            // prompts({
-            //     type: 'confirm',
-            //     name: 'value',
-            //     message: 'r u sure to continue ?',
-            //     initial: true
-            // })
-            //     .then((answer) => {
-            //         if (answer.value) {
-            //             callback()
-            //         }
-            //         else {
-            //             process.exit();
-            //         }
-            //     })
 
         }
     }

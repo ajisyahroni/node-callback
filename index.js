@@ -7,7 +7,17 @@ let app = new App();
 let blogs = new Model();
 let git = new Vcs();
 
-git.checkFiles(()=>console.log('haha'));
+git.checkFiles(()=>
+    blogs.store('args', {
+        hooks: {
+            beforeStore(data) { let parse = String(data).toUpperCase(); return parse },
+            afterStore(data) {
+                log('created', data)
+            }
+        }
+    }).finish()
+    
+);
 // git.untracked();
 // git.uncommited();
 
