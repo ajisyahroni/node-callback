@@ -2,7 +2,7 @@ class Model {
     constructor() {
         this.data = [];
     }
-    sanitizeString(data) {
+    sanitizeString(data) { 
         return String(data)
     }
     firing(data, { call: { init, destroy } }) {

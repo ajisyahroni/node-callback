@@ -41,22 +41,23 @@ class Git {
             if (stdout) uncommitedCallback(stdout)
         })
     }
+    gitStatus(gitStatusCallback) {
+        exec('git status -s', (err, stdout, stderr) => {
+            if (err) console.log(err);
+            if (stderr) console.log(stderr);
+            if (stdout) gitStatusCallback(stdout)
+        })
+    }
 
     async checkFiles(callback) {
         if (this.isGitRepo()) {
-
-            this.untracked((untrackStdout) => {
-                warnLog(`there some ${chalk.underline('untracked')} files :`)
-                redLog(untrackStdout)
-                this.uncommited(uncommitedStdOut => {
-                    warnLog(`there some ${chalk.underline('uncommited')} files :`)
-                    greenLog(uncommitedStdOut)
-                });
-
+            
+            this.gitStatus((gitStatusStdout)=>{
+                warnLog(`there some ${chalk.underline('untracked & uncommited')} files :`)
+                greenLog(gitStatusStdout)
             })
 
-
-            // await prompts({
+            // prompts({
             //     type: 'confirm',
             //     name: 'value',
             //     message: 'r u sure to continue ?',
@@ -70,8 +71,6 @@ class Git {
             //             process.exit();
             //         }
             //     })
-
-
 
         }
     }
