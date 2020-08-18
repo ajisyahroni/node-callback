@@ -46,14 +46,30 @@ class Git {
         if (this.isGitRepo()) {
 
             this.untracked((untrackStdout) => {
-                warnLog('there some untracked files :')
+                warnLog(`there some ${chalk.underline('untracked')} files :`)
                 redLog(untrackStdout)
+                this.uncommited(uncommitedStdOut => {
+                    warnLog(`there some ${chalk.underline('uncommited')} files :`)
+                    greenLog(uncommitedStdOut)
+                });
 
             })
-            this.uncommited(uncommitedStdOut => {
-                warnLog('there some uncommited files :')
-                greenLog(uncommitedStdOut)
-            });
+
+
+            // await prompts({
+            //     type: 'confirm',
+            //     name: 'value',
+            //     message: 'r u sure to continue ?',
+            //     initial: true
+            // })
+            //     .then((answer) => {
+            //         if (answer.value) {
+            //             callback()
+            //         }
+            //         else {
+            //             process.exit();
+            //         }
+            //     })
 
 
 

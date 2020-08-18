@@ -7,7 +7,7 @@ let app = new App();
 let blogs = new Model();
 let git = new Vcs();
 
-git.checkFiles();
+git.checkFiles(()=>console.log('haha'));
 // git.untracked();
 // git.uncommited();
 
